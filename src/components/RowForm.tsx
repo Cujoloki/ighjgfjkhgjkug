@@ -5,6 +5,8 @@
  
 @@ .. @@
    const [formData, setFormData] = useState({
+   }
+   )
 +    plot_id: row?.plot_id || '',
      name: row?.name || '',
 @@ .. @@
