@@ -1,0 +1,314 @@
+/* Farm Theme CSS */
+
+/* Theme Variables */
+:root {
+  /* Base Colors */
+  --farm-green: #4ade80;
+  --farm-green-dark: #22c55e;
+  --farm-green-light: #86efac;
+  --farm-brown: #92400e;
+  --farm-brown-light: #b45309;
+  --farm-sky: #0ea5e9;
+  --farm-sky-light: #7dd3fc;
+  --farm-soil: #78350f;
+  --farm-soil-light: #a16207;
+  --farm-wheat: #fbbf24;
+  --farm-wheat-light: #fcd34d;
+  --farm-tomato: #ef4444;
+  --farm-carrot: #f97316;
+  --farm-eggplant: #8b5cf6;
+  --farm-corn: #facc15;
+  
+  /* Seasonal Theme Colors */
+  --spring-primary: var(--farm-green-light);
+  --spring-secondary: #c084fc; /* Purple flower */
+  --spring-accent: #fde68a; /* Light yellow */
+  
+  --summer-primary: var(--farm-green);
+  --summer-secondary: var(--farm-tomato);
+  --summer-accent: var(--farm-corn);
+  
+  --fall-primary: #b45309; /* Amber */
+  --fall-secondary: #b91c1c; /* Red */
+  --fall-accent: #d97706; /* Orange */
+  
+  --winter-primary: #f3f4f6; /* Light gray */
+  --winter-secondary: #1e40af; /* Dark blue */
+  --winter-accent: #60a5fa; /* Blue */
+  
+  /* Current Season (dynamically changed by JS) */
+  --season-primary: var(--summer-primary);
+  --season-secondary: var(--summer-secondary);
+  --season-accent: var(--summer-accent);
+  --season-bg: var(--summer-bg);
+  
+  /* Background Patterns */
+  --summer-bg: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234ade80' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 640px) {
+  .farm-themed-dashboard {
+    background-image: var(--season-bg);
+    background-color: #f9fafb;
+    padding-bottom: 80px; /* Space for floating mic button */
+  }
+  
+  /* Header with farm theme */
+  .farm-themed-header {
+    background: linear-gradient(to right, var(--season-primary), var(--farm-green-dark));
+    color: white;
+    border-radius: 0 0 20px 20px;
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Stat cards with themed styles */
+  .farm-themed-stat {
+    border-radius: 12px;
+    border: 2px solid var(--farm-green-light);
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .farm-themed-stat:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--season-primary), var(--season-secondary));
+  }
+  
+  .farm-themed-stat:active {
+    transform: scale(0.98);
+  }
+  
+  /* Section containers */
+  .farm-themed-section {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .farm-themed-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--season-secondary), var(--season-accent));
+  }
+  
+  /* Section headers */
+  .farm-themed-section-header {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .farm-themed-section-header h3 {
+    font-weight: 600;
+    color: var(--farm-soil);
+    margin: 0;
+    font-size: 1.125rem;
+  }
+  
+  /* Farm-themed icons */
+  .farm-icon-bg {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .farm-icon-plots {
+    background-color: var(--farm-green-light);
+    color: var(--farm-green-dark);
+  }
+  
+  .farm-icon-rows {
+    background-color: var(--farm-wheat-light);
+    color: var(--farm-brown);
+  }
+  
+  .farm-icon-calendar {
+    background-color: var(--farm-sky-light);
+    color: var(--farm-sky);
+  }
+  
+  .farm-icon-categories {
+    background-color: #d8b4fe;
+    color: #7e22ce;
+  }
+  
+  /* Floating mic button */
+  .floating-mic-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background: linear-gradient(to bottom right, var(--season-primary), var(--season-secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .floating-mic-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .floating-mic-button.listening {
+    background: linear-gradient(to bottom right, var(--farm-tomato), #b91c1c);
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+  }
+  
+  /* Voice feedback overlay */
+  .voice-feedback-overlay {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    max-width: 80%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-left: 4px solid var(--season-primary);
+  }
+  
+  /* Prompt dialog */
+  .farm-prompt-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 350px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    overflow: hidden;
+  }
+  
+  .farm-prompt-header {
+    background: linear-gradient(to right, var(--season-primary), var(--season-secondary));
+    color: white;
+    padding: 1rem;
+    font-weight: 600;
+  }
+  
+  .farm-prompt-content {
+    padding: 1rem;
+  }
+  
+  .farm-prompt-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    gap: 0.5rem;
+  }
+  
+  .farm-prompt-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+  }
+  
+  /* Farm-themed buttons */
+  .farm-button-primary {
+    background-color: var(--season-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+  }
+  
+  .farm-button-secondary {
+    background-color: white;
+    color: var(--farm-soil);
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+  }
+  
+  /* Farm-themed list items */
+  .farm-list-item {
+    border-left: 3px solid var(--season-primary);
+    background-color: white;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+  }
+  
+  .farm-list-item:active {
+    transform: translateX(2px);
+  }
+}
+
+/* Seasonal theme detection - will be controlled by JavaScript */
+.theme-spring {
+  --season-primary: var(--spring-primary);
+  --season-secondary: var(--spring-secondary);
+  --season-accent: var(--spring-accent);
+}
+
+.theme-summer {
+  --season-primary: var(--summer-primary);
+  --season-secondary: var(--summer-secondary);
+  --season-accent: var(--summer-accent);
+}
+
+.theme-fall {
+  --season-primary: var(--fall-primary);
+  --season-secondary: var(--fall-secondary);
+  --season-accent: var(--fall-accent);
+}
+
+.theme-winter {
+  --season-primary: var(--winter-primary);
+  --season-secondary: var(--winter-secondary);
+  --season-accent: var(--winter-accent);
+}

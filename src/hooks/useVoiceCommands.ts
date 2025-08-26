@@ -1,22 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import type { VoiceCommand, VoiceCommandsHookProps, VoiceCommandsHookResult } from '../types/voiceCommands';
 
-interface VoiceCommand {
-  command: string;
-  action: () => void;
-  description: string;
-}
-
-interface UseVoiceCommandsProps {
-  commands: VoiceCommand[];
-  onTranscript?: (transcript: string) => void;
-  onError?: (error: string) => void;
-}
-
-export function useVoiceCommands({ commands, onTranscript, onError }: UseVoiceCommandsProps) {
+export function useVoiceCommands({ commands, onTranscript, onError }: VoiceCommandsHookProps): VoiceCommandsHookResult {
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const [transcript, setTranscript] = useState('');
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const commandsRef = useRef(commands); // Use ref to avoid dependency issues
+
+  // Update commands ref when commands change
+  useEffect(() => {
+    commandsRef.current = commands;
+  }, [commands]);
 
   useEffect(() => {
     // Check if speech recognition is supported
@@ -73,24 +68,45 @@ export function useVoiceCommands({ commands, onTranscript, onError }: UseVoiceCo
         recognitionRef.current.stop();
       }
     };
-  }, [commands, onTranscript, onError]);
+  }, [onTranscript, onError]);
 
   const processCommand = useCallback((transcript: string) => {
     // Find matching command
-    const matchedCommand = commands.find(cmd => 
+    const matchedCommand = commandsRef.current.find(cmd => 
       transcript.includes(cmd.command.toLowerCase())
     );
 
     if (matchedCommand) {
       matchedCommand.action();
       setTranscript(''); // Clear transcript after successful command
+      
+      // Auto-stop listening after executing a command on mobile
+      // This provides better UX for the floating mic button
+      if (window.innerWidth <= 768) {
+        setTimeout(() => {
+          if (recognitionRef.current && isListening) {
+            recognitionRef.current.stop();
+          }
+        }, 500);
+      }
     }
-  }, [commands]);
+  }, [isListening]);
 
   const startListening = useCallback(() => {
     if (recognitionRef.current && !isListening) {
       setTranscript('');
-      recognitionRef.current.start();
+      try {
+        recognitionRef.current.start();
+      } catch (error) {
+        console.error('Error starting speech recognition:', error);
+        // If already started, stop and restart
+        if (error instanceof DOMException && error.name === 'InvalidStateError') {
+          recognitionRef.current.stop();
+          setTimeout(() => {
+            recognitionRef.current?.start();
+          }, 100);
+        }
+      }
     }
   }, [isListening]);
 
